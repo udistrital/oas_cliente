@@ -7,9 +7,7 @@ Como componentes básicos cuenta con:
  * **Nebular 4**
 
 <summary><h2> :writing_hand: Mockups</h2></summary>
-  Los siguientes mockups grafican la estructura general de la aplicación, como sus principales vistas.
-  Para visualizar los mockups acceder a este enlace 
-  [Moc](https://bit.ly/2Y0CGoC)
+  EN DESARROLLO
 
 <summary><h2> 🛠️ Configuracion del proyecto</h2></summary>
 
@@ -17,8 +15,8 @@ Como componentes básicos cuenta con:
 
   - Correr el proyecto con
   ```shell
-      npx npm install ##instalación de dependencias
-      npx ng serve --port {PORT} ##donde PORT es el numero de puerto
+      npm install ##instalación de dependencias
+      npm start   ##despliegue en localhost 
   ```
 
 
