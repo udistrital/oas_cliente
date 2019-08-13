@@ -5,16 +5,20 @@ import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-
+import { ImplicitAutenticationService } from '../../../@core/utils/implicit_autentication.service';
 @Component({
   selector: 'ngx-header',
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  private autenticacion= new ImplicitAutenticationService;
+  private isButtonLogin=false;
 
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
+  username = '';
+  liveTokenValue: boolean = false;
   user: any;
 
   themes = [
@@ -38,22 +42,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [ { title: 'Perfil' }, { title: 'Cerrar Sesión' } ];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               private themeService: NbThemeService,
               private userService: UserData,
               private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService) {
+              private breakpointService: NbMediaBreakpointsService,) {
   }
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
 
-    this.userService.getUsers()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user = users.nick);
+    this.user = { name: '' };
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
@@ -69,6 +71,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+      this.menuService.onItemClick()
+      .pipe(
+          map(({ item: { title } }) => title),
+       )
+     .subscribe(title => { title === 'Cerrar Sesión' ? this.logout() : this.profile(); });
   }
 
   ngOnDestroy() {
@@ -91,4 +98,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.menuService.navigateHome();
     return false;
   }
+  liveToken() {
+    if (this.autenticacion.live()) {
+      this.liveTokenValue = this.autenticacion.live();
+      this.user.name = (this.autenticacion.getPayload()).sub;
+    }
+    return this.autenticacion.live();
+  }
+  login() {
+    window.location.replace(this.autenticacion.getAuthorizationUrl());
+  }
+
+  logout() {
+    this.autenticacion.logout();
+  }
+  profile() {
+
+  }
+ 
 }

@@ -17,6 +17,7 @@ Como componentes básicos cuenta con:
   ```shell
       npm install ##instalación de dependencias
       npm start   ##despliegue en localhost 
+      npm run build:prod ##despliegue en producción
   ```
 
 
