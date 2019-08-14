@@ -1,0 +1,56 @@
+<div class="row">
+   <div class="infinite-cards row">
+    <div class="col-md-12 col-lg-6 col-xxxl-6">
+      <nb-card class="own-scroll">
+        <nb-card-header>Noticias de la Universidad</nb-card-header>
+        <nb-list
+          nbInfiniteList
+          [threshold]="10"
+          (bottomThreshold)="loadNext(firstCard)">
+          <nb-list-item *ngFor="let newsPost of firstCard.news">
+            <ngx-noticias [post]="newsPost"></ngx-noticias>
+          </nb-list-item>
+          <nb-list-item *ngFor="let _ of firstCard.placeholders">
+            <ngx-news-post-placeholder></ngx-news-post-placeholder>
+          </nb-list-item>
+        </nb-list>
+      </nb-card>
+    </div>
+    <div class="col-md-12 col-lg-6 col-xxxl-6">
+      <nb-card class="own-scroll">
+        <nb-card-header>Noticias de Dependencias</nb-card-header>
+        <nb-list
+          nbInfiniteList
+          [threshold]="10"
+          (bottomThreshold)="loadNext(firstCard)">
+          <nb-list-item *ngFor="let newsPost of firstCard.news">
+            <ngx-noticias [post]="newsPost"></ngx-noticias>
+          </nb-list-item>
+          <nb-list-item *ngFor="let _ of firstCard.placeholders">
+            <ngx-news-post-placeholder></ngx-news-post-placeholder>
+          </nb-list-item>
+        </nb-list>
+      </nb-card>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xxl-12">
+    <div class="row">
+      <div class="col-md-3">
+        <ngx-profit-card></ngx-profit-card>
+      </div>
+      <div class="col-md-3">
+        <ngx-earning-card></ngx-earning-card>
+      </div>
+      <div class="col-md-3">
+        <ngx-profit-card></ngx-profit-card>
+      </div>
+      <div class="col-md-3">
+        <ngx-earning-card></ngx-earning-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
